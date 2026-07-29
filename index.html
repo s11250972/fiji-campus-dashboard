@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiji Campus Bus & Weather Dashboard</title>
+
+  <style>
+    /* -----------------------------
+       General Page Styling
+    ------------------------------ */
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #eef6ff;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      text-align: center;
+      color: #005b96;
+    }
+
+    .card {
+      background: #f8fbff;
+      border: 1px solid #cfdff2;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      box-sizing: border-box;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 12px;
+      padding: 10px 20px;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    #result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .weather-box {
+      background: #dff3ff;
+      border-left: 5px solid #0077cc;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <h1>Fiji Campus Bus & Weather Dashboard</h1>
+
+    <!-- ===========================
+         Bus Fare Calculator Section
+    ============================ -->
+    <div class="card">
+      <label for="budget">
+        Enter your bus fare budget (FJD):
+      </label>
+
+      <input
+        type="number"
+        id="budget"
+        placeholder="Example: 15"
+        step="0.01">
+
+      <button onclick="calculateTrips()">
+        Calculate Trips
+      </button>
+
+      <div id="result"></div>
+    </div>
+
+    <!-- ===========================
+         Weather Forecast Section
+    ============================ -->
+    <div class="weather-box">
+      <h2>Today's Weather Forecast (Suva)</h2>
+      <p><strong>Condition:</strong> Partly Cloudy 🌤️</p>
+      <p><strong>Temperature:</strong> 28°C</p>
+      <p><strong>Humidity:</strong> 78%</p>
+      <p><strong>Wind:</strong> 15 km/h SE</p>
+      <p>Carry a light umbrella as brief afternoon showers are possible.</p>
+    </div>
+
+  </div>
+
+  <script>
+    /*
+      Bus Fare Calculator
+
+      Assumption:
+      - Each bus ride costs FJD 1.50.
+
+      This function:
+      1. Reads the user's budget.
+      2. Checks if the input is valid.
+      3. Displays an error message in red if invalid.
+      4. Calculates and displays the number of rides in green if valid.
+    */
+    function calculateTrips() {
+
+      // Cost of one bus ride
+      const farePerRide = 1.50;
+
+      // Get the user's input
+      const budgetInput = document.getElementById("budget").value;
+      const result = document.getElementById("result");
+
+      // Validate the input
+      if (budgetInput.trim() === "" || parseFloat(budgetInput) <= 0) {
+        result.style.color = "red";
+        result.innerHTML = "Please enter a valid positive dollar amount.";
+        return;
+      }
+
+      // Convert the input to a number
+      const budget = parseFloat(budgetInput);
+
+      // Calculate the number of whole rides
+      const rides = Math.floor(budget / farePerRide);
+
+      // Display the result
+      result.style.color = "green";
+      result.innerHTML = "You can afford <strong>" + rides + "</strong> bus ride(s).";
+    }
+  </script>
+
+</body>
+</html>
